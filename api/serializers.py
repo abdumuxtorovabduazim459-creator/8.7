@@ -17,7 +17,6 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'text', 'created_at']
 
 
-# Barcha categoriyalar: ishlarning faqat nomi
 class CategorySerializer(serializers.ModelSerializer):
     jobs = serializers.SlugRelatedField(many=True, read_only=True, slug_field='title')
 
@@ -26,7 +25,6 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'jobs']
 
 
-# Bitta categoriya: ishlar to'liq
 class CategoryDetailSerializer(serializers.ModelSerializer):
     jobs = JobInCategorySerializer(many=True, read_only=True)
 
@@ -35,7 +33,6 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'jobs']
 
 
-# Barcha joblar: categoriya ma'lumoti bilan
 class JobSerializer(serializers.ModelSerializer):
     category_info = serializers.SerializerMethodField()
 
@@ -48,7 +45,6 @@ class JobSerializer(serializers.ModelSerializer):
         return {'id': obj.category.id, 'name': obj.category.name}
 
 
-# Bitta job: categoriya va commentlar bilan
 class JobDetailSerializer(JobSerializer):
     comments = CommentSerializer(many=True, read_only=True)
 
